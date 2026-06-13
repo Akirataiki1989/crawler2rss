@@ -1,0 +1,8 @@
+playwright
+beautifulsoup4
+sqlalchemy
+asyncpg
+aiohttp
+feedgen
+python-dateutil
+python-dotenv

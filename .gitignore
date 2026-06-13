@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# RSS 輸出（runtime 產生，不追蹤）
+*.xml
+rss_output/
+
+# 測試殘留
+*.html
+
+# Credentials (never commit)
+.env
+.env.bat
+
+# OS
+.DS_Store
+Thumbs.db
