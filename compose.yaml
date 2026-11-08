@@ -1,0 +1,19 @@
+services:
+  crawler:
+    image: crawler2rss:local
+    build: .
+    init: true
+    volumes:
+      - ./runtime.env:/app/.env:ro
+      - /volume1/web_packages/wordpress/rss:/rss
+      - ./logs:/logs
+    environment:
+      RSS_OUTPUT_DIR: /rss
+      SCRAPER_LOG_DIR: /logs
+      TZ: Asia/Taipei
+    networks:
+      - nas_network
+
+networks:
+  nas_network:
+    external: true

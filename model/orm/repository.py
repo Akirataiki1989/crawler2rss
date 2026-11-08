@@ -30,6 +30,11 @@ async def get_active_sources(session_maker: SessionMaker) -> list[Source]:
         return list(result.scalars().all())
 
 
+def source_matches_scraper(source: Source, scraper_type: type) -> bool:
+    class_name = f"{scraper_type.__module__}.{scraper_type.__name__}"
+    return bool(source.is_active and source.scraper_class == class_name)
+
+
 async def get_source_by_name(session_maker: SessionMaker, name: str) -> Source | None:
     async with session_maker() as session:
         stmt = select(Source).where(Source.name == name)

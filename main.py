@@ -36,7 +36,15 @@ async def run_scrapers(session_maker) -> None:
         async with semaphore:
             await run_scraper(session_maker, source)
 
-    await asyncio.gather(*[run_with_semaphore(s) for s in active_sources])
+    # Each scraper processes all of its configured sources, so launch it once.
+    sources_by_class = {}
+    for source in active_sources:
+        if not source.scraper_class:
+            logger.warning(f"No scraper_class set for source: '{source.name}', skipping.")
+            continue
+        sources_by_class.setdefault(source.scraper_class, source)
+
+    await asyncio.gather(*[run_with_semaphore(s) for s in sources_by_class.values()])
 
 
 async def main():

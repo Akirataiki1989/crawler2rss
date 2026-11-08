@@ -1,0 +1,11 @@
+.git
+.env*
+runtime.env
+__pycache__
+*.pyc
+logs
+rss_output
+rss-backup-*/
+run.lock
+schedule-before.json
+*.xml

@@ -13,6 +13,11 @@ rss_output/
 # Credentials (never commit)
 .env
 .env.bat
+runtime.env
+logs/
+run.lock
+rss-backup-*/
+schedule-before.json
 
 # OS
 .DS_Store

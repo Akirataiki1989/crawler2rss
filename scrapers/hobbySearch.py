@@ -81,6 +81,8 @@ class HobbySearchScraper:
 
             for source_name in self.SCRAPER_ITEM_NAME:
                 source = await repository.get_source_by_name(session_maker, source_name)
+                if source and not repository.source_matches_scraper(source, type(self)):
+                    continue
                 if not source:
                     logger.error(f"Source '{source_name}' not found in database.")
                     continue

@@ -3,7 +3,7 @@ import os
 import time
 from logging.handlers import TimedRotatingFileHandler
 
-_LOG_DIR = "/volume1/web/codeserver/logs"
+_LOG_DIR = os.environ.get("SCRAPER_LOG_DIR", "/volume1/web/codeserver/logs")
 _LOG_FILE = os.path.join(_LOG_DIR, "scraper.log")
 
 

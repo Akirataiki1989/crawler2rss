@@ -12,11 +12,8 @@ logger = setup_logger("Scrapers.AlbumComic")
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "zh-TW,zh;q=0.9",
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/125.0.0.0 Safari/537.36"
-    ),
+    # The site's CloudFront currently rejects the old Chrome/125 UA with 403.
+    "User-Agent": "Mozilla/5.0",
 }
 
 MAX_RETRIES = 3
@@ -97,6 +94,8 @@ class AlbumComicScraper:
         async with aiohttp.ClientSession(headers=HEADERS) as http:
             for source_name in self.SCRAPER_ITEM_NAME:
                 source = await repository.get_source_by_name(session_maker, source_name)
+                if source and not repository.source_matches_scraper(source, type(self)):
+                    continue
                 if not source:
                     logger.error(f"Source '{source_name}' not found in database.")
                     continue
