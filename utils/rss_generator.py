@@ -52,7 +52,8 @@ async def generate_rss_for_source(
     fg.language("zh-TW")
 
     for item in items:
-        fe = fg.add_entry()
+        # feedgen prepends by default; preserve newest-first DB order for this feed.
+        fe = fg.add_entry(order="append" if source.name == "SimplyPatrick" else "prepend")
         fe.id(item.guid)
         fe.title(item.title)
         fe.link(href=item.link)

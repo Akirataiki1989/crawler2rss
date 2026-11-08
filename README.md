@@ -13,3 +13,9 @@ Build with `docker compose build crawler`. DSM runs `run-scheduled.sh` at 08:00 
 The repository is maintained in `/home/gui/projects/crawler2rss`; pushing to GitHub does not update the NAS. To deploy a change, copy the intended source files to the NAS deployment directory without overwriting `runtime.env`, rebuild the image, and verify the job before relying on the next schedule.
 
 Do not commit `runtime.env`, RSS output, or logs. Keep the old deployment until the new job and schedule have been verified.
+
+## Simply Patrick
+
+The `SimplyPatrick` source combines the site's `/posts/index.xml` and `/tils/index.xml` feeds. The first run imports the newest 50 entries; later runs import entries newer than the last saved URL. Both feeds must load successfully before any articles are saved. Article links serve as stable GUIDs, and the original feed's HTML content and publication dates are retained.
+
+Register the source in `rss_feed.sources` with name `SimplyPatrick`, URL `https://blog.simplypatrick.com/`, RSS filename `simplypatrick.xml`, `is_active` true, and scraper class `scrapers.simplypatrick.SimplyPatrickScraper`. The output path on the NAS is `/volume1/web_packages/wordpress/rss/simplypatrick.xml`.
