@@ -5,7 +5,7 @@ services:
     init: true
     volumes:
       - ./runtime.env:/app/.env:ro
-      - /volume1/web_packages/wordpress/rss:/rss
+      - ./rss:/rss
       - ./logs:/logs
     environment:
       RSS_OUTPUT_DIR: /rss
