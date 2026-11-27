@@ -3,17 +3,30 @@ services:
     image: crawler2rss:local
     build: .
     init: true
+    env_file:
+      - ./runtime.env
     volumes:
       - ./runtime.env:/app/.env:ro
       - ./rss:/rss
       - ./logs:/logs
+      - crawler2rss_logs_spool:/var/lib/log-spool
     environment:
       RSS_OUTPUT_DIR: /rss
       SCRAPER_LOG_DIR: /logs
       TZ: Asia/Taipei
+      LOGS_API_URL: http://logs-api:8000/v1/logs
+      LOGS_SPOOL_PATH: /var/lib/log-spool/logs.sqlite
+      LOGS_SERVICE_ID: crawler2rss
+      LOGS_SERVICE_NAME: Crawler2RSS
+      LOGS_HOSTNAME: NAS
+      LOGS_CONTAINER: crawler
+      LOGS_IMAGE_TAG: crawler2rss:local
     networks:
       - nas_network
 
 networks:
   nas_network:
     external: true
+
+volumes:
+  crawler2rss_logs_spool:
